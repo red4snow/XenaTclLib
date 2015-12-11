@@ -1,13 +1,13 @@
-# ------------------------------------------------------------------------------------
+‏# ------------------------------------------------------------------------------------
 # Name      : xena_api_streams.tcl
 # Purpose   : Provide wrapper streams functions for easier usage
 # Create By : Dan Amzulescu - Xena Networks inc.
 #			  dsa@xenanetworks.com
 #
-#  Updated  : 17 Jul 2015
-#  Version  : v0.1
+#  Updated  : 11 Dec 2015
+#  Version  : v0.2
 # -----------------------------------------------------------------------------------
-
+‏‏
 
 # ----------------ModifyStreamRate-------------------------
 proc ModifyStreamRate {s port sid rate_type new_rate console} {
@@ -144,7 +144,7 @@ proc StreamRxErrorsResults {s port stream_tid result_type console} {
 # -----------------------------------------
 
 # ---------------------SaveStreamStatistics------------------------------------------------------
-proc SaveStreamResults { s tx_port rx_port tx_sid rx_tid console} {
+proc SaveStreamResults { s tx_port rx_port tx_sid rx_tid console {comment ""}} {
 	
 	set pf_flag 1
 
