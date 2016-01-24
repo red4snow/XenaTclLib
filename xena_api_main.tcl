@@ -4,12 +4,9 @@
 # Create By : Dan Amzulescu - Xena Networks inc.
 #			  dsa@xenanetworks.com
 #
-#  Updated  : 11 Dec 2015
-#  Version  : v0.8
+#  Updated  : 23 Jan 2016
+#  Version  : v0.9
 # -----------------------------------------------------------------------------------
-
-source xena_api_streams.tcl
-source xena_api_port.tcl
 
 
 # ---------------- Connect --------------------------------

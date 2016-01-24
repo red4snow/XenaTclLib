@@ -1,14 +1,12 @@
-‏# ------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 # Name      : xena_api_streams.tcl
 # Purpose   : Provide wrapper streams functions for easier usage
 # Create By : Dan Amzulescu - Xena Networks inc.
 #			  dsa@xenanetworks.com
 #
-#  Updated  : 11 Dec 2015
-#  Version  : v0.2
+#  Updated  : 23 Jan 2016
+#  Version  : v0.5
 # -----------------------------------------------------------------------------------
-‏‏
-
 # ----------------ModifyStreamRate-------------------------
 proc ModifyStreamRate {s port sid rate_type new_rate console} {
 	set pf_flag 1
@@ -32,7 +30,7 @@ proc ModifyStreamRate {s port sid rate_type new_rate console} {
 proc ModifyStreamMinPacketSize {s port sid new_size console} {
 	set pf_flag 1
 	
-	puts $s "$port PS_PACKETLENGTH \[$sid\] FIXED $new_size $new_size\n"	
+	puts $s "$port PS_PACKETLENGTH \[$sid\] FIXED $new_size $new_size"	
 	
 	gets $s response
 	if {$response == ""} { gets $s response	}
@@ -46,7 +44,7 @@ proc ModifyStreamMinPacketSize {s port sid new_size console} {
 # ----------------StreamTxTrafficResults-------------------------
 proc StreamTxTrafficResults {s port stream_id result_type console} {
 
-	puts $s "$port PT_STREAM \[$stream_id\] ?\n"
+	puts $s "$port PT_STREAM \[$stream_id\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
@@ -66,7 +64,7 @@ proc StreamTxTrafficResults {s port stream_id result_type console} {
 # -------------------StreamRxTrafficResults----------------------
 proc StreamRxTrafficResults {s port stream_tid result_type console} {
 
-	puts $s "$port PR_TPLDTRAFFIC \[$stream_tid\] ?\n"
+	puts $s "$port PR_TPLDTRAFFIC \[$stream_tid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
@@ -86,7 +84,7 @@ proc StreamRxTrafficResults {s port stream_tid result_type console} {
 # -------------------StreamRxLatencyResults----------------------
 proc StreamRxLatencyResults {s port stream_tid result_type console} {
 
-	puts $s "$port PR_TPLDLATENCY \[$stream_tid\] ?\n"
+	puts $s "$port PR_TPLDLATENCY \[$stream_tid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
@@ -107,7 +105,7 @@ proc StreamRxLatencyResults {s port stream_tid result_type console} {
 # -------------------StreamRxJitterResults----------------------
 proc StreamRxJitterResults {s port stream_tid result_type console} {
 
-	puts $s "$port PR_TPLDJITTER \[$stream_tid\] ?\n"
+	puts $s "$port PR_TPLDJITTER \[$stream_tid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
@@ -127,7 +125,7 @@ proc StreamRxJitterResults {s port stream_tid result_type console} {
 # -------------------StreamRxErrorsResults----------------------
 proc StreamRxErrorsResults {s port stream_tid result_type console} {
 
-	puts $s "$port PR_TPLDERRORS \[$stream_tid\] ?\n"
+	puts $s "$port PR_TPLDERRORS \[$stream_tid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
@@ -167,7 +165,7 @@ proc SaveStreamResults { s tx_port rx_port tx_sid rx_tid console {comment ""}} {
 	}
 	
 	
-	puts $s "$tx_port PT_STREAM \[$tx_sid\] ?\n"
+	puts $s "$tx_port PT_STREAM \[$tx_sid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
@@ -178,28 +176,28 @@ proc SaveStreamResults { s tx_port rx_port tx_sid rx_tid console {comment ""}} {
 	puts -nonewline $fp1  "$date,$time,,P_$tx_port,P_$rx_port,,$tx_sid,$rx_tid,,[lindex $results 6],[lindex $results 7],[lindex $results 8],[lindex $results 9],,"
 	
 
-	puts $s "$rx_port PR_TPLDTRAFFIC \[$rx_tid\] ?\n"
+	puts $s "$rx_port PR_TPLDTRAFFIC \[$rx_tid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
 	set results [split $response " "]
 	puts -nonewline $fp1  "[lindex $results 6],[lindex $results 7],[lindex $results 8],[lindex $results 9],,"
 
-	puts $s "$rx_port PR_TPLDERRORS \[$rx_tid\] ?\n"
+	puts $s "$rx_port PR_TPLDERRORS \[$rx_tid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
 	set results [split $response " "]
 	puts -nonewline $fp1  "[lindex $results 7],[lindex $results 8],[lindex $results 9],,"
 
-	puts $s "$rx_port PR_TPLDLATENCY \[$rx_tid\] ?\n"
+	puts $s "$rx_port PR_TPLDLATENCY \[$rx_tid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	
 	set results [split $response " "]
 	puts -nonewline $fp1  "[lindex $results 6],[lindex $results 7],[lindex $results 8],[lindex $results 9],,"
 	
-	puts $s "$rx_port PR_TPLDJITTER \[$rx_tid\] ?\n"
+	puts $s "$rx_port PR_TPLDJITTER \[$rx_tid\] ?"
 	gets $s response
 	if {$response == ""} { gets $s response	}
 	

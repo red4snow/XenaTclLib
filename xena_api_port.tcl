@@ -1,11 +1,11 @@
-‏# ------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 # Name      : xena_api_port.tcl
 # Purpose   : Provide wrapper port functions for easier usage
 # Create By : Dan Amzulescu - Xena Networks inc.
 #			  dsa@xenanetworks.com
 #
-#  Updated  : 11 Dec 2015
-#  Version  : v0.1
+#  Updated  : 23 Jan 2016
+#  Version  : v0.5
 # -----------------------------------------------------------------------------------
 
 # ---------------- IsPortReserved ----------------
@@ -335,8 +335,6 @@ proc PortRxNoTPLDResults {s port result_type console} {
 #
 # -----------------------------------------
 
-
-
 # -------------------PortRxFilterResults----------------------
 proc PortRxFilterResults {s port filter_id result_type console} {
 
@@ -359,7 +357,6 @@ proc PortRxFilterResults {s port filter_id result_type console} {
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------
 
-
 # ---------------- LoadPortConfig ----------------
 proc LoadPortConfig { s port file_name console} {
 	set fp [open $file_name r]
@@ -377,7 +374,6 @@ proc LoadPortConfig { s port file_name console} {
 }
 #
 # -----------------------------------------
-
 
 # ---------------- SavePortCapture ----------------
 proc SavePortCapture { s port console} {
