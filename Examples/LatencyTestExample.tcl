@@ -85,11 +85,10 @@ foreach port $ports {ReservePort $s $port $console_flag}
 
 # --- Load port configuration
 puts "\[Info\] Loading Port Configuration($port_config_1) to port ($tx_port_1)"
-#LoadPortConfig $s $tx_port_1 $port_config_1 $console_flag
+LoadPortConfig $s $tx_port_1 $port_config_1 $console_flag
 puts "\[Info\] Loading Port Configuration($port_config_2) to port ($tx_port_2)"
-#LoadPortConfig $s $tx_port_2 $port_config_2 $console_flag
-	
-	
+LoadPortConfig $s $tx_port_2 $port_config_2 $console_flag
+
 foreach rate $rates {
 	
 	# --- Modify rates for just first stream on all ports
@@ -101,7 +100,8 @@ foreach rate $rates {
 		foreach port $ports {ModifyStreamMinPacketSize $s $port 0 $size $console_flag}
 		
 		foreach port $ports {StopPortTraffic $s $port $console_flag}
-		after 200
+		after 300
+		SaveStreamResults $s $tx_port_1 $rx_port_1 0 $tx_tid_1 $console_flag
 		
 		# --- Clear Port Results
 		foreach port $ports {ClearPortResults $s $port $console_flag}
@@ -111,12 +111,23 @@ foreach rate $rates {
 	
 		# --- Save results of both Streams
 		for {set i 0} {$i < $trial_time } {incr i} {	
-			SaveStreamResults $s $tx_port_1 $rx_port_1 0 $tx_tid_1 $console_flag
-			SaveStreamResults $s $tx_port_2 $rx_port_2 0 $tx_tid_2 $console_flag
-			after 1000
+			
+			#SaveStreamResults $s $tx_port_2 $rx_port_2 0 $tx_tid_2 $console_flag
+			after 1000*60
 		}
 	}
 }
+	
+
+	
+		# --- Save results of both Streams
+		for {set i 0} {$i < $trial_time } {incr i} {	
+			SaveStreamResults $s $tx_port_1 $rx_port_1 0 $tx_tid_1 $console_flag
+			SaveStreamResults $s $tx_port_2 $rx_port_2 0 $tx_tid_2 $console_flag
+			after 1000
+}
+
+
 # --- Stop Traffic on all ports
 foreach port $ports {StopPortTraffic $s $port $console_flag}
 after 100
