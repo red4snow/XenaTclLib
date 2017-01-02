@@ -109,7 +109,7 @@ proc FeedStreamTxTrafficResults {xena_socket graphite_socket graphite_path port 
 	puts $graphite_socket "$graphite_path$result_type [lindex $tx_results 9] $systemTime"
 }
 
-# ----------------FeedStreamTxTrafficResults-------------------------
+# ----------------FeedStreamRxTrafficResults-------------------------
 proc FeedStreamRxTrafficResults {xena_socket graphite_socket graphite_path port stream_tid} {
 
     set systemTime [clock seconds]
@@ -183,7 +183,7 @@ proc FeedStreamRxJitterResults {xena_socket graphite_socket graphite_path port s
 proc FeedStreamRxErrorsResults {xena_socket graphite_socket graphite_path port stream_tid} {
 
     set systemTime [clock seconds]
-
+	puts "TESTTEST"
 	puts $xena_socket "$port PR_TPLDJITTER \[$stream_tid\] ?"
 	gets $xena_socket response
 	if {$response == ""} { gets $xena_socket response	}
@@ -198,4 +198,21 @@ proc FeedStreamRxErrorsResults {xena_socket graphite_socket graphite_path port s
 	puts $graphite_socket "$graphite_path$result_type [lindex $results 8] $systemTime"
 	set result_type "PayloadErrors"
 	puts $graphite_socket "$graphite_path$result_type [lindex $results 9] $systemTime"
+	
+	puts $xena_socket "$port PR_TPLDTRAFFIC \[$stream_tid\] ?"
+	gets $xena_socket response2
+	if {$response == ""} { gets $xena_socket response2	}
+	set results2 [split $response2 " "]
+	
+	set result_type "BER"
+	
+	set sumErrors [expr "[lindex $results 7] + [lindex $results 8]"]
+	set RxBits [expr "8 * [lindex $results2 9]"]
+		
+	if {$sumErrors} {		
+		puts $graphite_socket "$graphite_path$result_type [expr "double(1) / $RxBits / $sumErrors"] $systemTime"
+	}	else {
+		puts $graphite_socket "$graphite_path$result_type 0 $systemTime"
+	}
+	
 }

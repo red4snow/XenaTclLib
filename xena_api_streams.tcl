@@ -132,8 +132,8 @@ proc StreamRxErrorsResults {s port stream_tid result_type console} {
 	set results [split $response " "]
 	
 	switch $result_type {
-		"SEQ" { return [lindex $results 7]}
-		"MIS" { return [lindex $results 8]}
+		"SEQ" { return [lindex $results 7]} 
+		"MIS" { return [lindex $results 8]} 
 		"PLD" { return [lindex $results 9]}
 		default { return -1 }	
 	}

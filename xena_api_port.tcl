@@ -377,40 +377,46 @@ proc LoadPortConfig { s port file_name console} {
 
 # ---------------- SavePortCapture ----------------
 proc SavePortCapture { s port console} {
+	# Setting the Pass/Fail flag to true for error reporting
 	set pf_flag 1
 	
+	# Checking to see capture is not currently ON
 	puts $s "$port P_CAPTURE ?\n"
 	gets $s response
 	if {$response == ""} { gets $s response	}
-		
+	
+	# Turn OFF capture in case it is ON	
 	if {$response == "$port  P_CAPTURE  ON"} {
 		puts $s "$port P_CAPTURE OFF"
 		gets $s response
 		if {$response == ""} { gets $s response	}
 	}
 	
+	# Get the Date/Time from system in order to save it to a date formatted dir.
 	set systemTime [clock seconds]
-	
-	
-	
+		
 	regsub -all {[/]} $port {_} p
 	
+	#Create the files that are going to be used
 	set txt_file_name     [clock format $systemTime -format "Xena_Results/%d_%m_%Y/Capture/P_$p/%H_%M_%S.txt"]
 	set txtpcap_file_name [clock format $systemTime -format "Xena_Results/%d_%m_%Y/Capture/P_$p/%H_%M_%S.pcap.txt"]
 	set pcap_file_name    [clock format $systemTime -format "Xena_Results/%d_%m_%Y/Capture/P_$p/%H_%M_%S.pcap"]
 	
+	#Create the Directory that the PCAP will be saved to
 	file mkdir [clock format $systemTime -format "Xena_Results/%d_%m_%Y/Capture/P_$p"]
 	
+	# check txt File handler
 	if {[catch {set fp1 [open $txt_file_name w]} errmsg]} {
 		if {$console == 1} { puts "\n---Error---: $errmsg \n" }
 		return 0
 	}
-	
+	# check formatted_txt File handler
 	if {[catch {set fp2 [open $txtpcap_file_name w]} errmsg]} {
 		if {$console == 1} { puts "\n---Error---: $errmsg \n" }
 		return 0
 	}
 	
+	# Check amount of packet in Buffer.
 	puts $s "$port PC_STATS ?\n"
 	gets $s response
 	if {$response == ""} { gets $s response	}
@@ -418,8 +424,7 @@ proc SavePortCapture { s port console} {
 	set results [split $response " "]	
 	set buffered_packets [lindex $results 5]
 	
-	
-	
+	# Loop that gets all HEX format packets and places them 
 	if { $buffered_packets > 0 } {
 		for {set i 0} {$i < $buffered_packets } {incr i} {
 
@@ -475,6 +480,7 @@ proc SavePortResults { s port console} {
 		if {$console == 1} { puts "\n---Error---: $errmsg \n" }
 		return 0
 	}	
+	
 	
 	
 	if {$fexist==0} {

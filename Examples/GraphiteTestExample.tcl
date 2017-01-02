@@ -1,9 +1,10 @@
 # ------------------------------------------------------------------------------------
 # 
 # Purpose   : To demonstrate the usage of XenaMainStart loading API and running this test Scenario.
-#				Latency Test RFC2544 a la mode...
+#				
 # Create By : Dan Amzulescu - Xena Networks Inc.
 #			  dsa@xenanetworks.com
+#  Updated  : 1 Jan 2017
 #
 # -----------------------------------------------------------------------------------
 
@@ -83,7 +84,6 @@ if {$graphite_socket == "null"} {
 	return
 }
 
-puts "haha  $graphite_socket"
 
 # --- Login and provide owner user-name
 Login $xena_socket $xena1_password $xena1_owner $console_flag
