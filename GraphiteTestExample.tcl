@@ -9,12 +9,13 @@
 # -----------------------------------------------------------------------------------
 
 # ----- Import the Xena TCL Command Library ------
-#
-source [file dirname [info script]]/xena_api_main.tcl
-source [file dirname [info script]]/xena_api_port.tcl
-source [file dirname [info script]]/xena_api_streams.tcl
 
-source [file dirname [info script]]/xena_graphite_api_helper.tcl
+#
+source xena_api_main.tcl
+source xena_api_port.tcl
+source xena_api_streams.tcl
+
+source xena_graphite_api_helper.tcl
 
 # ------------------------------------------------
 
@@ -90,7 +91,7 @@ Login $xena_socket $xena1_password $xena1_owner $console_flag
 
 set systemTime [clock seconds]
 
-for {set i 0} {$i < 12000} {incr i} {
+for {set i 0} {$i < 120000} {incr i} {
     FeedPortTotalResults $xena_socket $graphite_socket "local.xena" $tx_port_1
 	FeedPortNoTPLDResults $xena_socket $graphite_socket "local.xena" $tx_port_1
 	
@@ -108,7 +109,7 @@ for {set i 0} {$i < 12000} {incr i} {
 	FeedStreamRxLatencyResults $xena_socket $graphite_socket "local.xena" $rx_port_2 $tx_tid_2
 	FeedStreamRxJitterResults $xena_socket $graphite_socket "local.xena" $rx_port_2 $tx_tid_2
 	FeedStreamRxErrorsResults $xena_socket $graphite_socket "local.xena" $rx_port_2 $tx_tid_2
-	after 500
+	after 800
 	puts "."
 }
 

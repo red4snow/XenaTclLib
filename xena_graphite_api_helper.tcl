@@ -183,7 +183,7 @@ proc FeedStreamRxJitterResults {xena_socket graphite_socket graphite_path port s
 proc FeedStreamRxErrorsResults {xena_socket graphite_socket graphite_path port stream_tid} {
 
     set systemTime [clock seconds]
-	puts "TESTTEST"
+	
 	puts $xena_socket "$port PR_TPLDJITTER \[$stream_tid\] ?"
 	gets $xena_socket response
 	if {$response == ""} { gets $xena_socket response	}
